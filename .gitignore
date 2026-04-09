@@ -182,6 +182,7 @@ pyrightconfig.json
 venv/
 .venv/
 env/
+.env
 
 # Scratches and Consoles
 scratches.xml
