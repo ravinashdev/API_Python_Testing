@@ -30,23 +30,30 @@ async def main():
     # ____________________________________________________________
     # Retrieve current position API request using Async to feed one api into another
     # works similar to promises in JavaScript
-    current_location_results = await asyncio.gather(
-        fetch_data(IP_LOCATION_API_ENDPOINT, params={}),
-    )
-    current_latitude, current_longitude = current_location_results[0]["loc"].split(",")
-    current_timezone = current_location_results[0]["timezone"]
-    # Retrieve current sunset/sunrise API request using results from first api request
-    # Use a dictionary with Key:Value pairs to input params or
-    # sunrise_sunset_api_endpoint_with_params = f"{SUNRISE_SUNSET_API_ENDPOINT}lat={current_latitude}&lng={current_longitude}&date={today}&tzid={current_timezone}"
-    params ={
-        "lat": current_latitude,
-        "lng": current_longitude,
-        "date": today,
-        "tzid": current_timezone,
-    }
-    current_sunrise_sunset_results = await asyncio.gather(
-        fetch_data(SUNRISE_SUNSET_API_ENDPOINT, params),
-    )
+    try:
+        current_location_results = await asyncio.gather(
+            fetch_data(IP_LOCATION_API_ENDPOINT, params={}),
+        )
+        current_latitude, current_longitude = current_location_results[0]["loc"].split(",")
+        current_timezone = current_location_results[0]["timezone"]
+        # Retrieve current sunset/sunrise API request using results from first api request
+        # Use a dictionary with Key:Value pairs to input params or
+        # sunrise_sunset_api_endpoint_with_params = f"{SUNRISE_SUNSET_API_ENDPOINT}lat={current_latitude}&lng={current_longitude}&date={today}&tzid={current_timezone}"
+        params ={
+            "lat": current_latitude,
+            "lng": current_longitude,
+            "date": today,
+            "tzid": current_timezone,
+        }
+        current_sunrise_sunset_results = await asyncio.gather(
+            fetch_data(SUNRISE_SUNSET_API_ENDPOINT, params),
+        )
+    # Default value if API call hits limit
+    except KeyError:
+        print("Error getting data")
+        current_sunrise_sunset_results = [
+            {"results": {"sunrise": "API Limit Reached", "sunset": "API Limit Reached"}}]
+        current_location_results = [{"city": "API Limit Reached"}]
     # Return a tuple of results
     return current_sunrise_sunset_results, current_location_results
 
