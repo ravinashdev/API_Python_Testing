@@ -15,6 +15,6 @@ async def main():
         tasks = [fetch_data(client, url, p) for url, p in urls_with_params]
         # Execute all calls concurrently
         results = await asyncio.gather(*tasks)
-        print(results)
+        return results[0], results[1]
 
-asyncio.run(main())
+api_call_1_results, api_call_2_results = asyncio.run(main())
