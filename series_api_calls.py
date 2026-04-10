@@ -56,6 +56,7 @@ current_city = current_location_results[0]["city"]
 current_sunrise_time = current_sunrise_sunset_results[0]["results"]["sunrise"]
 current_sunset_time = current_sunrise_sunset_results[0]["results"]["sunset"]
 
+print("Current Date:",today)
 print("Current City:",current_city)
 print("Current Sunrise Time:",current_sunrise_time)
 print("Current Sunset Time:",current_sunset_time)
