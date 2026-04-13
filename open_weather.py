@@ -48,7 +48,7 @@ async def main():
 current_weather_data = asyncio.run(main())
 current_city = current_weather_data[0]["name"]
 current_description = current_weather_data[0]["weather"][0]["description"]
-message=f"Weather Update: There are some {current_description} in {current_city} right now"
+message=f"Weather Update: Hi Aleks how are you we just spoke? There are some {current_description} in {current_city} right now"
 
 # Twillio SMS Test
 client = Client(TWILLIO_TEST_ACCOUNT_SID, TWILLIO_TEST_AUTH_TOKEN)
